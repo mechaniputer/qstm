@@ -31,7 +31,7 @@
 #include <cstddef>
 
 extern char *base_addr;
-#include "rpmalloc.hpp"
+#include "ralloc.hpp"
 #define pstm_pmalloc(size) RP_malloc(size)
 #define pstm_pfree(addr) RP_free(addr)
 

@@ -57,27 +57,24 @@
 # -------------------------
 # Paths configuration
 # -------------------------
+
 # list of directories which contain headers (include directories)
-IDIRS:=./src ./src/util ./src/test ./src/trackers ./bench/stamp-kozy/lib ./bench/stamp-kozy/vacation ./bench/stamp-kozy/intruder ../ralloc/src/
+IDIRS:=./src ./ext/parharness ./src/trackers ../../../src
 # directory to put build artifacts (e.g. .o, .d files)
 ODIR:=./obj
 # list of directories which contain linked in libraries
-# LDIRS:=./bench/stamp-kozy/vacation/libs ./bench/stamp-kozy/intruder/libs
-LDIRS := ../ralloc/test/
+LDIRS:=./ext/parharness ../../
 # libraries to link against (are expected to be in the above directories,
 # or they are system default)
-# LIBS :=-l:libjemalloc.so.2 -lparharness -lpthread -lhwloc -lm -lrt
-# -l:libintruder.a -l:libvacation.a 
-LIBS := -lpthread -lhwloc -lralloc
-# LIBS += -lmcore -lmtm -lpmalloc
+LIBS :=-l:libjemalloc.so.2 -lparharness -lpthread -lhwloc -lm -lrt -l:libralloc.a
 # directories that should be built first using recursive make.
 # You should avoid this in general, but it's useful for building
 # external libraries which we depend on
-RECURSEDIRS :=
+RECURSEDIRS := ext/parharness 
 # root directories of sources.  Will be recursively
 # searched for .c and .cpp files.  All of them will
 # be built
-SRCDIRS :=./bench/stamp-kozy ./src
+SRCDIRS :=./src
 # output directory for binary executables
 BINDIR :=./bin
 # C compiler
@@ -85,7 +82,7 @@ CC:=gcc
 # C++ compiler
 CXX:=g++
 # linker
-LD:= $(CXX) 
+LD:= $(CXX)
 
 
 # we input LIBS and output ARCHIVES
@@ -111,14 +108,14 @@ ARCHIVEDIR:=./lib
 # -since we do pattern matching between this list and the
 # source files, the file path specified must be the same
 # type (absolute or relative)
-EXECUTABLES:= ./src/main.cpp
+EXECUTABLES:= ./src/main.cpp ./src/intmain.cpp 
 
 # A list of source files contained in the
 # source directory to exclude from the build
 # -since we do pattern matching between this list and the
 # source files, the file path specified must be the same
 # type (absolute or relative)
-IGNORES:=./bench/stamp-kozy/lib/heap.c ./bench/stamp-kozy/lib/avltree.c
+IGNORES:=
 
 
 # -------------------------
@@ -131,13 +128,11 @@ WARNING_FLAGS:=-ftrapv -Wreturn-type -W -Wall \
 -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-parameter
 
 # Default build flags.  
-CFLAGS:=-pthread -g -std=c++11 -gdwarf-2 -fpic -fpermissive $(WARNING_FLAGS)
-#-D_GLIBCXX_USE_CXX11_ABI=0
-CXXFLAGS:=-pthread -std=c++11 -g -fpic -fpermissive $(WARNING_FLAGS) -mrtm
-#-D_GLIBCXX_USE_CXX11_ABI=0
-#-D_GLIBCXX_USE_CXX11_ABI=0 forces the compiler to use old ABI
+CFLAGS:=-pthread -g -gdwarf-2 -fPIC $(WARNING_FLAGS)
+CXXFLAGS:= -pthread -std=c++17 -g -fPIC $(WARNING_FLAGS)
+
 # linker flags
-LDFLAGS := $(WARNING_FLAGS) 
+LDFLAGS := $(WARNING_FLAGS)
 
 
 # -------------------------
@@ -151,8 +146,8 @@ LDFLAGS := $(WARNING_FLAGS)
 # define these build configurations).
 # To run a build, e.g. release, you would invoke:
 # make release
-BUILDS :=release debug ngc release32 debug32 qstm
-DEFAULT_BUILD :=qstm
+BUILDS :=release debug ngc release32 debug32
+DEFAULT_BUILD :=release
 
 # -------------------------------
 # Build and build var definitions
@@ -166,8 +161,8 @@ CFLAGS += -O3
 endif
 
 ifeq ($(BUILD),debug)
-CXXFLAGS += -O0 -DQUEUESTM
-CFLAGS += -O0 -DQUEUESTM
+CXXFLAGS += -O0
+CFLAGS += -O0
 # we can add additional debug customization here
 # e.g. link against different libraries, 
 # define enviroment vars, etc.
@@ -191,14 +186,6 @@ ifeq ($(BUILD),debug32)
 CXXFLAGS += -O0 -m32
 CFLAGS += -O0 -m32
 LDFLAGS += -m32
-# we can add additional release customization here
-# e.g. link against different libraries, 
-# define enviroment vars, etc.
-endif
-
-ifeq ($(BUILD),qstm)
-CXXFLAGS += -O3 -DQUEUESTM
-CFLAGS += -O3 -DQUEUESTM
 # we can add additional release customization here
 # e.g. link against different libraries, 
 # define enviroment vars, etc.
@@ -231,7 +218,7 @@ endif
 # -------------------------------
 
 # what targets get built by default
-ARTIFACTS := .info .bin .lib
+ARTIFACTS := .info .bin
 # .bin : compiles all executables
 # .lib : compiles archive files (.a , .so)
 # .static: compiles static archive (.a)

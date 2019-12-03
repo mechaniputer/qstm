@@ -2,7 +2,7 @@
 This repository contains the public release of QSTM, a persistent STM for byte-addressable NVM.
 
 ## Building
-Compile ralloc (aka rpmalloc) by running make librpmalloc.a in rpmalloc/test and then run 'make' in qstm/qstm
+Compile ralloc by running make libralloc.a in ralloc/test and then run 'make' in qstm/qstm
 
 ## Running
 To run STAMP Vacation:
