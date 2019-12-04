@@ -5,6 +5,8 @@ This repository contains the public release of QSTM, a persistent STM for byte-a
 Compile ralloc by running make libralloc.a in ralloc/test and then run 'make' in qstm/qstm
 
 ## Running
+Note: You should always delete the files created in /dev/shm prior to rerunning these tests, as these STAMP benchmarks are not real persistent applications and do not know how to reuse an old persistent segment.
+
 To run STAMP Vacation:
 ./bin/main -T2 -dcont=0 -t[number of threads]
 
