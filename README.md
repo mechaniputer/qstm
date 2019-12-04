@@ -13,3 +13,6 @@ To run STAMP Intruder:
 
 ## Configuration
 qstm/config.hpp contains several configuration options including Bloom filter size and persistence operations.
+
+## Misc/TODO
+At some point I plan to add several microbenchmarks to this repo as well but this will require additional cleanup.

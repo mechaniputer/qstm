@@ -1,20 +1,15 @@
 /*
+ * Copyright (C) 2019 University of Rochester. All rights reserved.
+ * Licenced under the MIT licence. See LICENSE file in the project root for
+ * details. 
+ */
 
-Copyright 2019 University of Rochester
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. 
-
-*/ 
+/*
+ * Copyright (C) 2018 Ricardo Leite
+ * Licenced under the MIT licence. This file shares some portion from
+ * LRMalloc(https://github.com/ricleite/lrmalloc) and its copyright 
+ * is retained. See LICENSE for details about MIT License.
+ */
 
 #ifndef _BASE_META_HPP_
 #define _BASE_META_HPP_
@@ -29,7 +24,6 @@ limitations under the License.
 #include <pthread.h>
 
 #include "pm_config.hpp"
-// #include "thread_util.hpp"
 
 #include "RegionManager.hpp"
 #include "SizeClass.hpp"
@@ -62,7 +56,7 @@ limitations under the License.
  *          Return persistent root i, or nullptr if there isn't.
  *          Type T is recorded as the type of root i and will be used in GC.
  *
- * Most of functions related to malloc and free share large portion of 
+ * Most of functions related to malloc and free share some portion of 
  * code with the open source project https://github.com/ricleite/lrmalloc
  * Some modifications were applied for bug fixing or functionality adjustment.
  *
